@@ -24,7 +24,7 @@ int main()
 	    LinkedList* listaEmpleados=ll_newLinkedList();
 	    printf("\n<<<<<BIENVENIDO>>>>>\n");
 	    do{
-	        if(!utn_getIntSinSigno(&option,"\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto)\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n10. Salir\n\nopcion???\n","\nerror opcion invalida\n",1,10,3))
+	        if(!utn_getInt(&option,"\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto)\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n10. Salir\n\nopcion???\n","\nerror opcion invalida\n",1,10,3))
 	        {
 	            switch(option)
 	            {
@@ -46,7 +46,7 @@ int main()
 	                    break;
 
 	                case 3:
-	                    if(!controller_addEmployee(listaEmpleados))
+	                    if(controller_addEmployee(listaEmpleados)==0)
 	                        {
 	                            printf("\nse dio de alta el empleado\n");
 	                        }

@@ -5,6 +5,10 @@
 #include "parser.h"
 #include "utn.h"
 
+static int buscarEmployeebyId(LinkedList*array,int id);
+
+int employee_Compare(void* thisA ,void* thisB);
+
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -65,9 +69,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     int horasAuxiliar;
     int sueldoAuxiliar;
 
-    if(!utn_getChar(nombreAuxiliar,128,3,"\ningrese nombre empleado\n","\nerror solo letras\n")
-        && !utn_getIntSinSigno(&horasAuxiliar,"\ningrese horas trabajadas\n","\nerror\n",0,999999,3)
-        && !utn_getIntSinSigno(&sueldoAuxiliar,"\ningrese sueldo \n","\nerror\n",0,999999,3)
+    if(!utn_getLetras(nombreAuxiliar,128,3,"\ningrese nombre empleado\n","\nerror solo letras\n")
+        && !utn_getInt(&horasAuxiliar,"\ningrese horas trabajadas\n","\nerror\n",0,999999999,3)
+        && !utn_getInt(&sueldoAuxiliar,"\ningrese sueldo \n","\nerror\n",0,999999999,3)
         && pEmployeeauxiliar!=NULL
         && !Employee_setNombre(pEmployeeauxiliar,nombreAuxiliar)
         && !Employee_setHorasTrabajadas(pEmployeeauxiliar,horasAuxiliar)
@@ -86,7 +90,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
     return retorno;
 }
-
 /** \brief Modificar datos de empleado
  *
  * \param path char*
@@ -105,16 +108,16 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     int sueldoAuxiliar;
     Employee*pEmployeeAuxiliar;
 
-    if(!utn_getIntSinSigno(&id,"\ningrese id del empleado para modificar los datos\n","\nerror\n",0,999999999,3))
+    if(!utn_getInt(&id,"\ningrese id del empleado para modificar los datos\n","\nerror\n",0,999999999,3))
     {
         indice=buscarEmployeebyId(pArrayListEmployee,id);
-        if(indice>=0 && !utn_getIntSinSigno(&opcion,"\ningrese:\n1 para modificar nombre\n2 para modificar horas trabajadas\n3 para modificar sueldo\n","\nerror opcion invalida\n",1,3,3))
+        if(indice>=0 && !utn_getInt(&opcion,"\ningrese:\n1 para modificar nombre\n2 para modificar horas trabajadas\n3 para modificar sueldo\n","\nerror opcion invalida\n",1,3,3))
         {
             pEmployeeAuxiliar=(Employee*)ll_get(pArrayListEmployee,indice);
             switch(opcion)
             {
                 case 1:
-                if(!utn_getChar(nombreAuxiliar,128,3,"\ningrese nuevo nombre\n","\nerror solo letras\n")
+                if(!utn_getLetras(nombreAuxiliar,128,3,"\ningrese nuevo nombre\n","\nerror solo letras\n")
                     && !Employee_setNombre(pEmployeeAuxiliar,nombreAuxiliar))
                 {
                     retorno=0;
@@ -122,7 +125,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                 break;
 
                 case 2:
-                if(!utn_getIntSinSigno(&horasAuxiliar,"\ningrese cantidad de horas\n","\nerror\n",0,999999999,3)
+                if(!utn_getInt(&horasAuxiliar,"\ningrese cantidad de horas\n","\nerror\n",0,999999999,3)
                    &&!Employee_setHorasTrabajadas(pEmployeeAuxiliar,horasAuxiliar))
                 {
                     retorno=0;
@@ -130,7 +133,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                 break;
 
                 case 3:
-                if(!utn_getIntSinSigno(&sueldoAuxiliar,"\ningrese nuevo sueldo\n","\nerror\n",0,999999999,3)
+                if(!utn_getInt(&sueldoAuxiliar,"\ningrese nuevo sueldo\n","\nerror\n",0,999999999,3)
                    &&!Employee_setHorasTrabajadas(pEmployeeAuxiliar,sueldoAuxiliar))
                 {
                     retorno=0;
@@ -154,7 +157,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     int retorno=-1;
     int id;
     int indice;
-    if(!utn_getIntSinSigno(&id,"\ningrese id del empleado\n","\nerror\n",0,999999999,3))
+    if(!utn_getInt(&id,"\ningrese id del empleado\n","\nerror\n",0,999999999,3))
         {
             indice=buscarEmployeebyId(pArrayListEmployee,id);
             if(indice>=0)
@@ -213,6 +216,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  * \return int
  *
  */
+
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
     ll_sort(pArrayListEmployee,employee_Compare,1);
@@ -285,4 +289,26 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     fclose(parchivo);
     return retorno;
 }
+static int buscarEmployeebyId(LinkedList*array,int id)
+{
+    int indice=-1;
+    int len=ll_len(array);
+    int i;
+    Employee*pEmployeeAuxiliar;
+    int idEmployee;
 
+    if(array!=NULL)
+    {
+        for(i=0;i<len;i++)
+        {
+            pEmployeeAuxiliar=(Employee*)ll_get(array,i);
+            Employee_getId(pEmployeeAuxiliar,&idEmployee);
+            if(idEmployee==id)
+                {
+                    indice=i;
+                    break;
+                }
+        }
+    }
+    return indice;
+}
