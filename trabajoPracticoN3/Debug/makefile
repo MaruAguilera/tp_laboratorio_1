@@ -28,7 +28,7 @@ all: trabajoPracticoN3
 trabajoPracticoN3: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "trabajoPracticoN3" $(OBJS) $(USER_OBJS) $(LIBS) /home/alumno/Documentos/aguk/tp3_linux/LinkedList.a
+	gcc  -o "trabajoPracticoN3" $(OBJS) $(USER_OBJS) $(LIBS) /home/alumno/Documentos/aguk/tp_laboratorio_1/trabajoPracticoN3/LinkedList.a
 	@echo 'Finished building target: $@'
 	@echo ' '
 
