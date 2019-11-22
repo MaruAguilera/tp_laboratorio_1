@@ -24,12 +24,12 @@ int main()
 	    LinkedList* listaEmpleados=ll_newLinkedList();
 	    printf("\n<<<<<BIENVENIDO>>>>>\n");
 	    do{
-	        if(!utn_getIntSinSigno(&option,"\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto)\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n10. Salir\n\nopcion???\n","\nerror opcion invalida\n",1,10,3))
+	        if(utn_getInt(&option,"\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto)\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n10. Salir\n\nopcion???\n","\nerror opcion invalida\n",1,10,3) ==0)
 	        {
 	            switch(option)
 	            {
 	                case 1:
-	                    if(!controller_loadFromText("data.csv",listaEmpleados))
+	                    if(controller_loadFromText("data.csv",listaEmpleados)==0)
 	                    {
 	                        printf("\nSe cargaron los datos de los empleados correctamente\n");
 	                    }
@@ -37,7 +37,7 @@ int main()
 	                break;
 
 	                case 2:
-	                    if(!controller_loadFromBinary("data.csv",listaEmpleados))
+	                    if(controller_loadFromBinary("data.csv",listaEmpleados)==0)
 	                    {
 	                        printf("\nSe cargaron los datos de los empleados correctamente\n");
 	                    }
@@ -46,7 +46,7 @@ int main()
 	                    break;
 
 	                case 3:
-	                    if(!controller_addEmployee(listaEmpleados))
+	                    if(controller_addEmployee(listaEmpleados)==0)
 	                        {
 	                            printf("\nse dio de alta el empleado\n");
 	                        }
@@ -55,7 +55,7 @@ int main()
 	                        break;
 
 	                case 4:
-	                    if(!controller_editEmployee(listaEmpleados))
+	                    if(controller_editEmployee(listaEmpleados)==0)
 	                        {
 	                            printf("\nse modificaron los datos del empleado\n");
 	                        }
@@ -64,7 +64,7 @@ int main()
 	                    break;
 
 	                case 5:
-	                    if(!controller_removeEmployee(listaEmpleados))
+	                    if(controller_removeEmployee(listaEmpleados)==0)
 	                        {
 	                            printf("\nSe dio de baja el empleado\n");
 	                        }
@@ -72,7 +72,7 @@ int main()
 	                    break;
 
 	                case 6:
-	                    if(!controller_ListEmployee(listaEmpleados))
+	                    if(controller_ListEmployee(listaEmpleados)==0)
 	                        {
 	                            printf("\nlista empleados\n");
 	                        }
@@ -84,14 +84,14 @@ int main()
 	                    break;
 
 	                case 8:
-	                    if(!controller_saveAsText("data.csv",listaEmpleados))
+	                    if(controller_saveAsText("data.csv",listaEmpleados)==0)
 	                        {
 	                            printf("\nse guardaron los datos\n");
 	                        }
 	                        else{printf("\nno se guardaron los datos\n");}
 	                    break;
 	                case 9:
-	                    if(!controller_saveAsBinary("data.csv",listaEmpleados))
+	                    if(controller_saveAsBinary("data.csv",listaEmpleados)==0)
 	                    {
 	                        printf("\nse guardaron los datos\n");
 	                    }
